@@ -132,4 +132,4 @@ dmypy.json
 .vscode/
 
 #DSstore
-.DSstore/
+.DS_store
