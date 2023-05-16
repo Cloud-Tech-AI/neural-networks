@@ -8,8 +8,8 @@ class Model:
     layers: list[Layer] = field(default_factory=list)
     loss: Loss = SquaredError()
     optimizer: str = None
-    learning_rate: float = 0.01
-    epochs: int = 10
+    learning_rate: float = 0.05
+    epochs: int = 50
     batch_size: int = 32
 
     def add(self, layer):
@@ -24,12 +24,12 @@ class Model:
         for idx, layer in enumerate(self.layers[1:],1):
             layer.forward(self.layers[idx-1].output)
     
-    def get_loss(self, y_batch):
-        self.loss.get_loss(y_batch, self.layers[-1].output)
+    def get_loss(self, y):
+        self.loss.get_loss(y, self.layers[-1].output)
     
     def backward(self, y):
         self.layers[-1].backward(y,loss=self.loss.type)
-        for idx, layer in enumerate(self.layers[1::-1]):
+        for idx, layer in enumerate(reversed(self.layers[:-1])):
             layer.backward(self.layers[-1 - idx].grad_current_layer)
 
     def train(self, X_train, y_train):

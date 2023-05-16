@@ -17,7 +17,7 @@ for idx in range(len(df)):
     y_train.append(np.asarray([1,0] if df.loc[idx][-1] == 1 else [0,1]).reshape(-1,1))
 
 # create a model
-model = Model(loss=CrossEntropy(), batch_size=len(X_train))
+model = Model(loss=CrossEntropy(),batch_size=len(X_train))
 model.add(Dense(input_size=7, output_size=3))
 model.add(Dense(input_size=3, output_size=5))
 model.add(Dense(input_size=5, output_size=2, activation=Softmax()))

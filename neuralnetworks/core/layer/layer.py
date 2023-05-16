@@ -32,6 +32,7 @@ class Layer:
 class Dense(Layer):
     def __post_init__(self):
         self.type = 'dense'
+        np.random.seed(42)
         self.initialize_weights()
         self.reset_gradients()
 
