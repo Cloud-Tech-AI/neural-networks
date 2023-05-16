@@ -4,10 +4,12 @@ version = "0.1.0"
 description = ""
 authors = ["ishan-modi <ishan.modi24@gmail.com>"]
 readme = "README.md"
-packages = []
+packages = [{ include = "neuralnetworks" }]
 
 [tool.poetry.dependencies]
 python = "^3.9"
+pandas = "^2.0.1"
+pydantic = "^1.10.7"
 
 
 [build-system]

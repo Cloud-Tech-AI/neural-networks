@@ -1,12 +1,13 @@
 import numpy as np
-from pydantic import Field, dataclass
+from dataclasses import dataclass, field
 
 @dataclass
 class Activation:
-    input: np.ndarray = Field.default_factory(np.array([]))
+    input: np.ndarray = field(default_factory=lambda: np.array([]))
     type: str = None
-    output: np.ndarray = Field.default_factory(np.array([]))
+    output: np.ndarray = field(default_factory=lambda: np.array([]))
 
+@dataclass
 class Sigmoid(Activation):
     def __post_init__(self):
         self.type = 'sigmoid'
@@ -14,27 +15,30 @@ class Sigmoid(Activation):
     def activate(self, input):
         self.input = input
         self.output = 1 / (1 + np.exp(-self.input))
-    
+
+@dataclass  
 class ReLU(Activation):
     def __post_init__(self):
         self.type = 'relu'
 
-    def relu(self, input):
+    def activate(self, input):
         self.input = input
         self.output = np.maximum(0, self.input)
 
+@dataclass
 class Tanh(Activation):
     def __post_init__(self):
         self.type = 'tanh'
     
-    def tanh(self, input):
+    def activate(self, input):
         self.input = input
         self.output = (np.exp(self.input) - np.exp(-self.input)) / (np.exp(self.input) + np.exp(-self.input))
-    
+
+@dataclass 
 class Softmax(Activation):
     def __post_init__(self):
         self.type = 'softmax'
 
-    def softmax(self, input):
+    def activate(self, input):
         self.input = input
         self.output = np.exp(self.input) / np.sum(np.exp(self.input))
