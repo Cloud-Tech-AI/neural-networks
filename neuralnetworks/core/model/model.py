@@ -5,7 +5,7 @@ from helpers.loss_functions.loss import Loss, SquaredError
 
 @dataclass
 class Model:
-    layers: list[Layer] = field(default_factory=list)
+    layers: list[Layer] = field(default_factory=lambda: [])
     loss: Loss = SquaredError()
     optimizer: str = None
     learning_rate: float = 0.01
