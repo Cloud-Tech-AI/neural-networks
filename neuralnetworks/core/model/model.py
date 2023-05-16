@@ -8,8 +8,8 @@ class Model:
     layers: list[Layer] = field(default_factory=list)
     loss: Loss = SquaredError()
     optimizer: str = None
-    learning_rate: float = 0.05
-    epochs: int = 50
+    learning_rate: float = 0.01
+    epochs: int = 100
     batch_size: int = 32
 
     def add(self, layer):
@@ -49,6 +49,6 @@ class Model:
                 print(f'Epoch: {curr_epoch} Step: {step} Loss: {self.loss.step_loss/len(X_batch)}')
                 self.loss.reset_step_loss()
                 step += 1
-            print(f'Epoch: {curr_epoch} Avg Loss: {self.loss.epoch_loss/len(X_train)}')
+            # print(f'Epoch: {curr_epoch} Avg Loss: {self.loss.epoch_loss/len(X_train)}')
             self.loss.reset_epoch_loss()
             curr_epoch += 1

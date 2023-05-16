@@ -1,6 +1,7 @@
 import numpy as np
 from dataclasses import dataclass, field
 from helpers.activation_functions.activation import Activation, Sigmoid
+from helpers.normalize_functions.normalizer import Normalizer, ZScore
 
 
 @dataclass
@@ -11,7 +12,7 @@ class Layer:
     bias: np.ndarray = field(default_factory=lambda: np.array([]))
     activation: Activation = Sigmoid()
     type: str = None
-    normalizer: str = 'z-score'
+    normalizer: Normalizer = ZScore()
     input: np.ndarray = field(default_factory=lambda: np.array([]))
     output: np.ndarray = field(default_factory=lambda: np.array([]))
     grad_weights: np.ndarray = field(default_factory=lambda: np.array([]))
@@ -20,9 +21,10 @@ class Layer:
     grad_current_layer: np.ndarray = field(default_factory=lambda: np.array([]))
 
     def initialize_weights(self):
-        self.weights = np.random.rand(self.output_size, self.input_size)
-        self.bias = np.random.rand(self.output_size, 1)
-        # call normalizer
+        self.normalizer.normalize(np.random.rand(self.output_size, self.input_size))
+        self.weights = self.normalizer.output
+        self.normalizer.normalize(np.random.rand(self.output_size, 1))
+        self.bias = self.normalizer.output
         
     def reset_gradients(self):
         self.grad_weights = np.zeros_like(self.weights)
