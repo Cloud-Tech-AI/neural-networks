@@ -12,8 +12,8 @@ df = pd.read_csv("data/seeds_dataset.csv")
 X_train = []
 y_train = []
 for idx in range(len(df)):
-    X_train.append(np.asarray(df.loc[idx][1:]).reshape(-1,1))
-    y_train.append(np.asarray([1,0] if df.loc[idx][0] == 1 else [0,1]).reshape(-1,1))
+    X_train.append(np.asarray(df.loc[idx][:-1]).reshape(-1,1))
+    y_train.append(np.asarray([1,0,0] if df.loc[idx][-1] == 1 else [0,1,0] if df.loc[idx][-1] == 2 else [0,0,1]).reshape(-1,1))
 
 # create a model
 model = Model(loss=CrossEntropy())
