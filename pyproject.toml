@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "deep-learning-algorithms"
+name = "neuralnetworks"
 version = "0.1.0"
 description = ""
 authors = ["ishan-modi <ishan.modi24@gmail.com>"]
