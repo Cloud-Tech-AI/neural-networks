@@ -1,43 +1,45 @@
 import numpy as np
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
-@dataclass
-class Activation:
-    input: np.ndarray = field(default_factory=lambda: np.array([]))
-    type: str = None
-    output: np.ndarray = field(default_factory=lambda: np.array([]))
+from .base import Activation
+
 
 @dataclass
 class Sigmoid(Activation):
     def __post_init__(self):
-        self.type = 'sigmoid'
+        self.type = "sigmoid"
 
     def activate(self, input):
         self.input = input
         self.output = 1 / (1 + np.exp(-self.input))
 
-@dataclass  
+
+@dataclass
 class ReLU(Activation):
     def __post_init__(self):
-        self.type = 'relu'
+        self.type = "relu"
 
     def activate(self, input):
         self.input = input
         self.output = np.maximum(0, self.input)
 
+
 @dataclass
 class Tanh(Activation):
     def __post_init__(self):
-        self.type = 'tanh'
-    
+        self.type = "tanh"
+
     def activate(self, input):
         self.input = input
-        self.output = (np.exp(self.input) - np.exp(-self.input)) / (np.exp(self.input) + np.exp(-self.input))
+        self.output = (np.exp(self.input) - np.exp(-self.input)) / (
+            np.exp(self.input) + np.exp(-self.input)
+        )
 
-@dataclass 
+
+@dataclass
 class Softmax(Activation):
     def __post_init__(self):
-        self.type = 'softmax'
+        self.type = "softmax"
 
     def activate(self, input):
         self.input = input
