@@ -1,25 +1,23 @@
 import numpy as np
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
-@dataclass
-class Normalizer:
-    input: np.ndarray = field(default_factory=lambda: np.array([]))
-    type: str = None
-    output: np.ndarray = field(default_factory=lambda: np.array([]))
+from .base import Normalizer
+
 
 @dataclass
 class MinMax(Normalizer):
     def __post_init__(self):
-        self.type = 'min-max'
+        self.type = "min-max"
 
-    def normalize(self, input, min = 0, max = 1):
+    def normalize(self, input, min=0, max=1):
         self.input = input
-        self.output = ((self.input - min / (max - min)) * (max-min)) + min
+        self.output = ((self.input - min / (max - min)) * (max - min)) + min
 
-@dataclass  
+
+@dataclass
 class ZScore(Normalizer):
     def __post_init__(self):
-        self.type = 'z-score'
+        self.type = "z-score"
 
     def normalize(self, input):
         self.input = input
